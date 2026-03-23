@@ -3,6 +3,7 @@
 import { motion } from 'motion/react';
 import { ShieldCheck, ArrowRight, CheckCircle2, Share2 } from 'lucide-react';
 import Image from 'next/image';
+import TestimonialCarousel from './TestimonialCarousel';
 
 export default function Hero() {
   const handleShare = async () => {
@@ -169,83 +170,7 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.6 }}
           className="mt-24 lg:mt-32"
         >
-          <div className="flex items-center gap-4 mb-10">
-            <div className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
-            <span className="text-sm font-black text-slate-400 uppercase tracking-[0.3em]">Testimonios Reales</span>
-            <div className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
-          </div>
-
-          <div className="relative overflow-hidden py-10">
-            <motion.div 
-              animate={{ x: [0, -1000, 0] }}
-              transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-              className="flex gap-8 w-max"
-            >
-              {[
-                {
-                  name: "María García",
-                  role: "Paciente de Cirugía",
-                  quote: "Increíble atención. No pagué ni un peso de deducible gracias a su asesoría.",
-                  image: "https://picsum.photos/seed/p1/100/100"
-                },
-                {
-                  name: "Roberto Sánchez",
-                  role: "Atención Especializada",
-                  quote: "El proceso fue transparente y muy rápido. Altamente recomendados.",
-                  image: "https://picsum.photos/seed/p2/100/100"
-                },
-                {
-                  name: "Elena Torres",
-                  role: "Consulta General",
-                  quote: "Me sentí cuidada en todo momento. Son expertos en lo que hacen.",
-                  image: "https://picsum.photos/seed/p3/100/100"
-                },
-                {
-                  name: "Carlos Ruiz",
-                  role: "Urgencias",
-                  quote: "La rapidez con la que me atendieron fue vital. Excelente servicio.",
-                  image: "https://picsum.photos/seed/p4/100/100"
-                },
-                {
-                  name: "Ana Martínez",
-                  role: "Maternidad",
-                  quote: "Todo el proceso de mi parto fue impecable. Gracias por todo.",
-                  image: "https://picsum.photos/seed/p5/100/100"
-                }
-              ].concat([
-                {
-                  name: "María García",
-                  role: "Paciente de Cirugía",
-                  quote: "Increíble atención. No pagué ni un peso de deducible gracias a su asesoría.",
-                  image: "https://picsum.photos/seed/p1/100/100"
-                },
-                {
-                  name: "Roberto Sánchez",
-                  role: "Atención Especializada",
-                  quote: "El proceso fue transparente y muy rápido. Altamente recomendados.",
-                  image: "https://picsum.photos/seed/p2/100/100"
-                }
-              ]).map((testimonial, i) => (
-                <div
-                  key={i}
-                  className="bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/20 dark:shadow-none w-[350px] flex-shrink-0"
-                >
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-blue-100 dark:border-blue-900">
-                      <Image src={testimonial.image} alt={testimonial.name} fill className="object-cover" />
-                    </div>
-                    <div>
-                      <div className="text-sm font-bold text-slate-900 dark:text-white">{testimonial.name}</div>
-                      <div className="text-[10px] text-blue-600 dark:text-blue-400 font-black uppercase tracking-wider">{testimonial.role}</div>
-                    </div>
-                  </div>
-                  <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed italic">
-                    &quot;{testimonial.quote}&quot;
-                  </p>
-                </div>
-              ))}
-            </motion.div>
-          </div>
+          <TestimonialCarousel />
         </motion.div>
       </div>
     </section>
