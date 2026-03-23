@@ -36,6 +36,7 @@ export default function Carousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
 
   const slideVariants = {
     enter: (direction: number) => ({
@@ -65,15 +66,19 @@ export default function Carousel() {
   }, []);
 
   useEffect(() => {
-    if (!isPlaying) return;
+    if (!isPlaying || isHovered) return;
     const timer = setInterval(() => {
       paginate(1);
     }, 5000);
     return () => clearInterval(timer);
-  }, [paginate, isPlaying]);
+  }, [paginate, isPlaying, isHovered]);
 
   return (
-    <div className="relative w-full h-[400px] md:h-[500px] overflow-hidden rounded-3xl bg-slate-100 mb-16 group">
+    <div 
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="relative w-full h-[400px] md:h-[600px] overflow-hidden rounded-[3rem] bg-slate-100 dark:bg-slate-900 mb-16 group transition-colors duration-500 shadow-2xl border-8 border-white dark:border-slate-800"
+    >
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
           key={currentIndex}
@@ -119,21 +124,21 @@ export default function Carousel() {
               referrerPolicy="no-referrer"
             />
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/20 to-transparent flex flex-col justify-end p-8 md:p-16">
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent flex flex-col justify-end p-8 md:p-20">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="max-w-2xl"
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="max-w-3xl"
             >
-              <div className="inline-flex items-center gap-1.5 bg-blue-600/90 backdrop-blur-sm text-white px-3 py-1 rounded-full mb-4 border border-blue-400/30">
+              <div className="inline-flex items-center gap-1.5 bg-blue-600/90 backdrop-blur-md text-white px-4 py-1.5 rounded-full mb-6 border border-blue-400/30 shadow-lg">
                 <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-                <span className="text-[10px] font-bold uppercase tracking-wider">Servicio 24/7</span>
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em]">Servicio 24/7</span>
               </div>
-              <h3 className="text-3xl md:text-4xl font-black text-white mb-4 tracking-tight">
+              <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 tracking-tight font-display leading-[1.1]">
                 {slides[currentIndex].title}
               </h3>
-              <p className="text-lg text-slate-200 font-medium">
+              <p className="text-lg md:text-xl text-slate-200 font-medium leading-relaxed max-w-2xl">
                 {slides[currentIndex].description}
               </p>
             </motion.div>

@@ -1,15 +1,34 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { ShieldCheck, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, ArrowRight, CheckCircle2, Share2 } from 'lucide-react';
 import Image from 'next/image';
 
 export default function Hero() {
+  const handleShare = async () => {
+    const shareData = {
+      title: 'MEDICREY - Asesoría en Seguros de Gastos Médicos Mayores',
+      text: 'Te ayudo a sacar el mejor provecho de tu seguro sin co-seguro ni deducible.',
+      url: window.location.href,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(window.location.href);
+        alert('Enlace copiado al portapapeles');
+      }
+    } catch (err) {
+      console.error('Error sharing:', err);
+    }
+  };
+
   return (
-    <section className="relative overflow-hidden pt-16 pb-24 lg:pt-24 lg:pb-32 bg-slate-50">
+    <section className="relative overflow-hidden pt-16 pb-24 lg:pt-24 lg:pb-32 bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
       {/* Background Pattern */}
-      <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
-        <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <div className="absolute inset-0 z-0 opacity-10 dark:opacity-5 pointer-events-none">
+        <svg className="w-full h-full text-slate-900 dark:text-white" viewBox="0 0 100 100" preserveAspectRatio="none">
           <defs>
             <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
               <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" strokeWidth="0.5" />
@@ -23,53 +42,77 @@ export default function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Content */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="flex flex-col space-y-8"
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            className="flex flex-col space-y-10"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-[10px] font-bold uppercase tracking-[0.2em] border border-blue-100 dark:border-blue-800 shadow-sm w-fit">
               <ShieldCheck size={14} />
               Tu derecho a la mejor salud
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-[1.1] tracking-tight">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 dark:text-white leading-[0.95] tracking-tight font-display">
               ¿Tienes <span className="text-blue-600">Seguro de Gastos Médicos Mayores</span>?
             </h1>
 
-            <p className="text-lg text-slate-600 max-w-xl leading-relaxed">
-              Soy tu asesor de confianza. Te ayudo a sacar el mejor provecho de tu seguro sin co-seguro ni deducible.
+            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed font-medium">
+              Soy tu asesor de confianza. Te ayudo a sacar el mejor provecho de tu seguro <span className="text-slate-900 dark:text-white font-bold underline decoration-blue-500/30 underline-offset-4">sin co-seguro ni deducible</span>.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-5">
               <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="bg-blue-600 text-white px-8 py-4 rounded-xl text-base font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all flex items-center justify-center gap-2"
+                whileHover={{ scale: 1.05, y: -4 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative overflow-hidden bg-blue-600 text-white px-10 py-5 rounded-2xl text-lg font-bold shadow-2xl shadow-blue-300/40 hover:bg-blue-700 transition-all flex items-center justify-center gap-3 group"
               >
-                ¡Usar mi Seguro!
-                <ArrowRight size={18} />
+                <span className="relative z-10 flex items-center gap-3">
+                  ¡Usar mi Seguro!
+                  <ArrowRight size={22} />
+                </span>
+                <motion.div
+                  initial={{ x: '-100%' }}
+                  animate={{ x: '200%' }}
+                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', repeatDelay: 3 }}
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
+                />
               </motion.button>
               <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="bg-white text-slate-900 border border-slate-200 px-8 py-4 rounded-xl text-base font-bold hover:bg-slate-50 transition-all flex items-center justify-center gap-2"
+                whileHover={{ scale: 1.05, y: -4 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 px-10 py-5 rounded-2xl text-lg font-bold hover:bg-white dark:hover:bg-slate-800 transition-all flex items-center justify-center gap-2 shadow-lg shadow-slate-200/50 dark:shadow-none"
               >
                 Ver Beneficios
               </motion.button>
+              <motion.button
+                onClick={handleShare}
+                whileHover={{ scale: 1.05, y: -4 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-6 py-5 rounded-2xl text-lg font-bold hover:bg-slate-300 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2 shadow-md"
+                title="Compartir página"
+              >
+                <Share2 size={22} />
+                <span className="sm:hidden lg:inline">Compartir</span>
+              </motion.button>
             </div>
 
-            <div className="flex items-center gap-6 pt-4">
-              <div className="flex items-center gap-2 text-sm font-medium text-slate-500">
-                <CheckCircle2 size={16} className="text-green-500" />
+            <div className="flex items-center gap-8 pt-6">
+              <div className="flex items-center gap-2.5 text-sm font-bold text-slate-700 dark:text-slate-300">
+                <div className="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400">
+                  <CheckCircle2 size={14} />
+                </div>
                 Sin Co-seguro
               </div>
-              <div className="flex items-center gap-2 text-sm font-medium text-slate-500">
-                <CheckCircle2 size={16} className="text-green-500" />
+              <div className="flex items-center gap-2.5 text-sm font-bold text-slate-700 dark:text-slate-300">
+                <div className="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400">
+                  <CheckCircle2 size={14} />
+                </div>
                 Sin Deducible
               </div>
-              <div className="flex items-center gap-2 text-sm font-medium text-slate-500">
-                <CheckCircle2 size={16} className="text-green-500" />
+              <div className="flex items-center gap-2.5 text-sm font-bold text-slate-700 dark:text-slate-300">
+                <div className="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400">
+                  <CheckCircle2 size={14} />
+                </div>
                 Cirugías Gratuitas
               </div>
             </div>
@@ -77,43 +120,133 @@ export default function Hero() {
 
           {/* Image */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="relative hidden lg:block"
           >
-            <div className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl shadow-blue-100 border-8 border-white">
+            <motion.div 
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
+              className="relative w-full aspect-[4/5] rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(37,99,235,0.2)] border-[12px] border-white dark:border-slate-800 group"
+            >
               <Image
-                src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=800&h=1000"
-                alt="Asesor Médico Profesional"
+                src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&q=80&w=1000&h=1250"
+                alt="Equipo médico profesional de confianza"
                 fill
-                className="object-cover"
+                className="object-cover group-hover:scale-110 transition-transform duration-[2s] ease-out"
                 referrerPolicy="no-referrer"
+                priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-blue-900/40 to-transparent" />
-            </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-blue-900/40 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-700" />
+            </motion.div>
 
             {/* Floating Card */}
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl border border-slate-100 max-w-xs"
+              className="absolute -bottom-6 -left-6 bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-800 max-w-xs"
             >
               <div className="flex items-center gap-4 mb-3">
-                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
                   <ShieldCheck size={24} />
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-slate-900">Asesoría de Confianza</div>
-                  <div className="text-xs text-slate-500">Atención Personalizada</div>
+                  <div className="text-sm font-bold text-slate-900 dark:text-white">Asesoría de Confianza</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">Atención Personalizada</div>
                 </div>
               </div>
-              <p className="text-xs text-slate-600 leading-relaxed italic">
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed italic">
                 &quot;Tu salud no tiene precio, y nuestra asesoría tampoco.&quot;
               </p>
             </motion.div>
           </motion.div>
         </div>
+        {/* Testimonials Carousel */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.6 }}
+          className="mt-24 lg:mt-32"
+        >
+          <div className="flex items-center gap-4 mb-10">
+            <div className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
+            <span className="text-sm font-black text-slate-400 uppercase tracking-[0.3em]">Testimonios Reales</span>
+            <div className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
+          </div>
+
+          <div className="relative overflow-hidden py-10">
+            <motion.div 
+              animate={{ x: [0, -1000, 0] }}
+              transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+              className="flex gap-8 w-max"
+            >
+              {[
+                {
+                  name: "María García",
+                  role: "Paciente de Cirugía",
+                  quote: "Increíble atención. No pagué ni un peso de deducible gracias a su asesoría.",
+                  image: "https://picsum.photos/seed/p1/100/100"
+                },
+                {
+                  name: "Roberto Sánchez",
+                  role: "Atención Especializada",
+                  quote: "El proceso fue transparente y muy rápido. Altamente recomendados.",
+                  image: "https://picsum.photos/seed/p2/100/100"
+                },
+                {
+                  name: "Elena Torres",
+                  role: "Consulta General",
+                  quote: "Me sentí cuidada en todo momento. Son expertos en lo que hacen.",
+                  image: "https://picsum.photos/seed/p3/100/100"
+                },
+                {
+                  name: "Carlos Ruiz",
+                  role: "Urgencias",
+                  quote: "La rapidez con la que me atendieron fue vital. Excelente servicio.",
+                  image: "https://picsum.photos/seed/p4/100/100"
+                },
+                {
+                  name: "Ana Martínez",
+                  role: "Maternidad",
+                  quote: "Todo el proceso de mi parto fue impecable. Gracias por todo.",
+                  image: "https://picsum.photos/seed/p5/100/100"
+                }
+              ].concat([
+                {
+                  name: "María García",
+                  role: "Paciente de Cirugía",
+                  quote: "Increíble atención. No pagué ni un peso de deducible gracias a su asesoría.",
+                  image: "https://picsum.photos/seed/p1/100/100"
+                },
+                {
+                  name: "Roberto Sánchez",
+                  role: "Atención Especializada",
+                  quote: "El proceso fue transparente y muy rápido. Altamente recomendados.",
+                  image: "https://picsum.photos/seed/p2/100/100"
+                }
+              ]).map((testimonial, i) => (
+                <div
+                  key={i}
+                  className="bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/20 dark:shadow-none w-[350px] flex-shrink-0"
+                >
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-blue-100 dark:border-blue-900">
+                      <Image src={testimonial.image} alt={testimonial.name} fill className="object-cover" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-bold text-slate-900 dark:text-white">{testimonial.name}</div>
+                      <div className="text-[10px] text-blue-600 dark:text-blue-400 font-black uppercase tracking-wider">{testimonial.role}</div>
+                    </div>
+                  </div>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed italic">
+                    &quot;{testimonial.quote}&quot;
+                  </p>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
