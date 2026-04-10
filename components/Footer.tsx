@@ -2,6 +2,7 @@
 
 import { Phone, Mail, MessageCircle, MapPin, Facebook, Instagram, Linkedin, Twitter, Activity } from 'lucide-react';
 import { motion } from 'motion/react';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -23,13 +24,13 @@ export default function Footer() {
             className="flex flex-col space-y-8"
           >
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
-                  <Activity size={24} />
-                </div>
-                <span className="text-2xl font-black text-white tracking-tighter font-display">
-                  MEDICREY
-                </span>
+              <div className="relative h-20 w-[3.98rem] rounded-2xl border border-3 border-white bg-white/5 p-2 overflow-hidden shadow-inner">
+                <Image 
+                  src="/images/logo.jpeg" 
+                  alt="RedMedic Logo" 
+                  fill 
+                  className="object-contain"
+                />
               </div>
             </div>
             <p className="text-base leading-relaxed text-slate-400 font-medium">

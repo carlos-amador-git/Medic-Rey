@@ -129,14 +129,13 @@ export default function Hero() {
             <motion.div 
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="relative w-full aspect-[4/5] rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(37,99,235,0.2)] border-[12px] border-white dark:border-slate-800 group"
+              className="relative w-full aspect-[2/3] rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(37,99,235,0.2)] border-[12px] border-white dark:border-slate-800 group"
             >
               <Image
-                src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&q=80&w=1000&h=1250"
-                alt="Equipo médico profesional de confianza"
+                src="/images/kikito.jpeg"
+                alt="Asesor de confianza - MedicRey"
                 fill
                 className="object-cover group-hover:scale-110 transition-transform duration-[2s] ease-out"
-                referrerPolicy="no-referrer"
                 priority
               />
               <div className="absolute inset-0 bg-gradient-to-t from-blue-900/40 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-700" />

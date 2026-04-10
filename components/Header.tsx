@@ -3,6 +3,7 @@
 import React from 'react';
 import { Phone, MessageCircle, Facebook, Activity, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import Image from 'next/image';
 import ThemeToggle from './ThemeToggle';
 
 export default function Header() {
@@ -24,7 +25,7 @@ export default function Header() {
         : 'bg-transparent py-4'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 md:h-20 transition-all duration-500">
+        <div className="flex justify-between items-center h-20 md:h-28 transition-all duration-500">
           {/* Logo */}
           <motion.div 
             animate={{ 
@@ -35,12 +36,15 @@ export default function Header() {
             className="flex-shrink-0"
           >
             <div className="flex items-center gap-2 group cursor-pointer">
-              <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-200 dark:shadow-blue-900/20 group-hover:rotate-12 transition-transform duration-300">
-                <Activity size={24} />
+              <div className="relative h-20 w-32 md:h-28 md:w-36 rounded-2xl border-[3px] border-white shadow-xl bg-white/5 p-2 overflow-hidden transition-all duration-300">
+                <Image 
+                  src="/images/logo.jpeg" 
+                  alt="RedMedic Logo" 
+                  fill 
+                  className="object-contain"
+                  priority
+                />
               </div>
-              <span className="text-2xl md:text-3xl font-black text-blue-600 tracking-tighter font-display">
-                MEDICREY
-              </span>
             </div>
           </motion.div>
 
@@ -134,10 +138,14 @@ export default function Header() {
             >
               <div className="p-6 flex items-center justify-between border-b border-slate-100 dark:border-slate-800">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
-                    <Activity size={18} />
+                  <div className="relative h-20 w-24 rounded-2xl border-[3px] border-white shadow-lg bg-white/5 p-2 overflow-hidden">
+                    <Image 
+                      src="/images/logo.jpeg" 
+                      alt="RedMedic Logo" 
+                      fill 
+                      className="object-contain"
+                    />
                   </div>
-                  <span className="text-xl font-black text-blue-600 tracking-tighter">MEDICREY</span>
                 </div>
                 <button 
                   onClick={() => setIsMobileMenuOpen(false)}
