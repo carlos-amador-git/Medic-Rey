@@ -30,7 +30,7 @@ function CountUp({ value }: { value: number }) {
 
 export default function StatsCounters() {
   return (
-    <section className="relative py-32 overflow-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
+    <section className="relative py-16 sm:py-20 lg:py-32 overflow-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
       <div className="absolute inset-0 bg-brand-accent/5 dark:bg-brand-accent/10" />
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-primary/50 to-transparent" />
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-secondary/50 to-transparent" />

@@ -45,7 +45,7 @@ const freeBenefits = [
 
 export default function FreeBenefits() {
   return (
-    <section className="relative py-32 overflow-hidden bg-white dark:bg-slate-950 transition-colors duration-500">
+    <section id="beneficios" className="relative py-16 sm:py-20 lg:py-32 overflow-hidden bg-white dark:bg-slate-950 transition-colors duration-500">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-brand-primary/5 dark:bg-brand-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
