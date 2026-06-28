@@ -19,8 +19,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'MedicRey - Red Médica y Hospitalaria',
-  description: 'Tu red médica y hospitalaria de confianza en México. Aprovecha tu Seguro de Gasto Médico Mayor sin co-seguro ni deducible.',
+  title: 'RedMedic - Red Médica y Hospitalaria',
+  description: 'Tu red médica y hospitalaria de confianza en México. Aprovecha tu Seguro de Gasto Médico Mayor sin deducible.',
 };
 
 import { ThemeProvider } from 'next-themes';

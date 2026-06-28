@@ -1,6 +1,7 @@
 'use client';
 
-import { motion } from 'motion/react';
+import { motion, useScroll, useTransform } from 'motion/react';
+import { useRef } from 'react';
 import { Clock, DollarSign, Heart, ShieldCheck, Zap, Star } from 'lucide-react';
 import Image from 'next/image';
 
@@ -9,22 +10,22 @@ const benefits = [
     title: 'Tiempo',
     description: 'Agilizamos tus trámites y consultas para que te enfoques en tu recuperación.',
     icon: Clock,
-    color: 'text-blue-600',
-    bg: 'bg-blue-100',
+    color: 'from-brand-primary to-brand-primary-container',
+    bg: 'bg-brand-primary/10',
   },
   {
     title: 'Dinero',
-    description: 'Eliminamos co-seguros y deducibles para que tu salud no sea un gasto excesivo.',
+    description: 'Eliminamos deducibles para que tu salud no sea un gasto excesivo.',
     icon: DollarSign,
-    color: 'text-green-600',
-    bg: 'bg-green-100',
+    color: 'from-brand-secondary to-brand-secondary-container',
+    bg: 'bg-brand-secondary/10',
   },
   {
     title: 'Salud',
     description: 'Acceso a los mejores especialistas e instituciones médicas de México.',
     icon: Heart,
-    color: 'text-red-600',
-    bg: 'bg-red-100',
+    color: 'from-brand-accent to-brand-accent-container',
+    bg: 'bg-brand-accent/10',
   },
 ];
 
@@ -38,96 +39,118 @@ const extraBenefits = [
 ];
 
 export default function Benefits() {
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
+  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
+
   return (
-    <section id="beneficios" className="py-24 bg-slate-50 dark:bg-slate-950 relative overflow-hidden transition-colors duration-500">
-      {/* Decorative Circles */}
-      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 rounded-full bg-blue-100/50 dark:bg-blue-900/10 blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-96 h-96 rounded-full bg-blue-100/50 dark:bg-blue-900/10 blur-3xl pointer-events-none" />
+    <section ref={sectionRef} id="beneficios" className="relative py-32 overflow-hidden bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
+      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 rounded-full bg-brand-primary/10 dark:bg-brand-primary/5 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-96 h-96 rounded-full bg-brand-secondary/10 dark:bg-brand-secondary/5 blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight font-display">
-            Nuestros <span className="text-blue-600">Beneficios</span>
+        <motion.div
+          initial={false}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-primary/10 dark:bg-brand-primary/20 text-brand-primary text-xs font-bold uppercase tracking-widest border border-brand-primary/20 dark:border-brand-primary/40 mb-6">
+            <span className="w-1.5 h-1.5 bg-brand-primary rounded-full animate-pulse" />
+            Beneficios Exclusivos
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight font-display">
+            Nuestros <span className="text-gradient">Beneficios</span>
           </h2>
-          <p className="mt-6 text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-medium">
-            Obtén los siguientes beneficios <span className="text-blue-600 font-bold">¡SIN COSTO!</span> al usar tu seguro con nosotros.
+          <p className="mt-4 sm:mt-6 text-lg sm:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-medium">
+            Obtén los siguientes beneficios <span className="text-brand-primary font-bold">¡SIN COSTO!</span> al usar tu seguro con nosotros.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-32">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-24 lg:mb-32">
           {benefits.map((benefit, index) => (
             <motion.div
               key={benefit.title}
-              initial={{ opacity: 0, y: 40 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
-              whileHover={{ y: -15, scale: 1.02 }}
-              className="bg-white dark:bg-slate-900 p-12 rounded-[3rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_40px_80px_-20px_rgba(37,99,235,0.15)] border border-slate-50 dark:border-slate-800 flex flex-col items-center text-center group transition-all duration-500"
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.7, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -10 }}
+              className="group relative"
             >
-              <div className={`w-24 h-24 rounded-[1.75rem] ${benefit.bg} dark:bg-blue-900/30 ${benefit.color} flex items-center justify-center mb-10 shadow-lg shadow-current/10 group-hover:rotate-12 transition-transform duration-700`}>
-                <benefit.icon size={48} />
+              <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/20 to-brand-secondary/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className="relative bg-white dark:bg-slate-900 p-8 lg:p-10 rounded-3xl shadow-lg shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden transition-all duration-500">
+                <div className={`w-16 h-16 lg:w-20 lg:h-20 rounded-2xl bg-gradient-to-br ${benefit.color} text-white flex items-center justify-center mb-6 lg:mb-8 shadow-lg shadow-current/20 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-700`}>
+                  <benefit.icon size={32} className="lg:w-10 lg:h-10" />
+                </div>
+                <h3 className="text-2xl lg:text-3xl font-black text-slate-900 dark:text-white mb-4 tracking-tight font-display">{benefit.title}</h3>
+                <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                  {benefit.description}
+                </p>
+                <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-brand-primary to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
               </div>
-              <h3 className="text-3xl font-black text-slate-900 dark:text-white mb-6 tracking-tight font-display">{benefit.title}</h3>
-              <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-                {benefit.description}
-              </p>
             </motion.div>
           ))}
         </div>
 
-        <div className="bg-blue-600 rounded-[4rem] p-12 lg:p-24 text-white relative overflow-hidden shadow-[0_40px_80px_-15px_rgba(37,99,235,0.3)]">
-          <div className="absolute top-0 right-0 p-12 opacity-10">
-            <ShieldCheck size={300} />
-          </div>
+        <motion.div
+          initial={false}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-accent via-brand-accent-container to-brand-primary shadow-2xl shadow-brand-accent/30"
+        >
+          <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-64 h-64 lg:w-96 lg:h-96 rounded-full bg-white/5 blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-48 h-48 lg:w-72 lg:h-72 rounded-full bg-white/5 blur-3xl pointer-events-none" />
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 p-8 sm:p-10 lg:p-16 items-center relative z-10">
             <div>
-              <h3 className="text-4xl lg:text-5xl font-black mb-12 leading-[1.1] tracking-tight font-display">
-                ¿Por qué elegir MedicRey?
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black mb-8 lg:mb-10 leading-[1.1] tracking-tight font-display">
+                ¿Por qué elegir RedMedic?
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-5">
                 {extraBenefits.map((item, index) => (
                   <motion.div
                     key={item}
-                    initial={{ opacity: 0, x: -10 }}
+                    initial={false}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: index * 0.05 }}
-                    className="flex items-center gap-4 group cursor-default"
+                    className="flex items-center gap-3 group cursor-default"
                   >
-                    <div className="flex-shrink-0 w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-blue-600 transition-all duration-300">
-                      <Star size={14} className="text-white group-hover:fill-current" />
+                    <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-brand-accent transition-all duration-300">
+                      <Star size={12} className="text-white group-hover:fill-current" />
                     </div>
-                    <span className="text-base font-semibold text-blue-50 tracking-wide">{item}</span>
+                    <span className="text-sm font-semibold text-blue-50/90">{item}</span>
                   </motion.div>
                 ))}
               </div>
             </div>
 
             <div className="hidden lg:block">
-              <div className="relative w-full aspect-video rounded-3xl overflow-hidden border-4 border-white/20 shadow-2xl">
+              <div className="relative w-full aspect-video rounded-2xl overflow-hidden border-4 border-white/20 shadow-2xl group">
                 <Image
-                  src="https://picsum.photos/seed/hospital-room/800/450"
+                  src="https://images.unsplash.com/photo-1551076805-e1869033e561?w=800&q=80"
                   alt="Instalaciones Médicas"
                   fill
-                  className="object-cover"
-                  referrerPolicy="no-referrer"
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-blue-900/20" />
+                <div className="absolute inset-0 bg-brand-accent/20 group-hover:bg-brand-accent/10 transition-colors duration-500" />
                 <motion.div
                   animate={{ scale: [1, 1.1, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
                   className="absolute inset-0 flex items-center justify-center"
                 >
-                  <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center text-blue-600 shadow-xl cursor-pointer hover:scale-110 transition-transform">
-                    <Zap size={24} fill="currentColor" />
+                  <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center text-brand-primary shadow-xl cursor-pointer hover:scale-110 transition-transform">
+                    <Zap size={20} fill="currentColor" />
                   </div>
                 </motion.div>
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
